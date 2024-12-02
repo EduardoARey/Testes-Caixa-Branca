@@ -1,0 +1,25 @@
+# Teste de Caixa Branca - Análise Estática
+
+## Erros Identificados
+
+1. **Driver de conexão MySQL incorreto**
+   - **Erro**: `com.mysql.Driver.Manager` não existe.
+   - **Correção**: Substituir por `com.mysql.cj.jdbc.Driver`.
+
+2. **Ausência de tratamento de exceções**
+   - **Erro**: Bloco `catch` vazio.
+   - **Correção**: Adicionar `e.printStackTrace()` ou usar um logger.
+
+3. **Exposição de credenciais**
+   - **Erro**: Credenciais do banco de dados estão visíveis no código.
+   - **Correção**: Utilizar variáveis de ambiente ou arquivo de configuração.
+
+4. **SQL Injection**
+   - **Erro**: Concatenação de strings ao montar a consulta SQL.
+   - **Correção**: Substituir por `PreparedStatement`.
+
+5. **Conexão não verificada**
+   - **Erro**: `conn` pode ser `null`.
+   - **Correção**: Verificar a conexão antes de utilizá-la.
+
+
