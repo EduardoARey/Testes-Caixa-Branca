@@ -1,24 +1,11 @@
-# Projeto de Login com Conexão ao Banco de Dados
+Identificação dos erros no código:
 
-Este repositório contém um projeto Java que implementa uma funcionalidade de **autenticação de usuários**. O objetivo do projeto é gerenciar a **conexão com o banco de dados MySQL** e validar as **credenciais de login** fornecidas pelo usuário.
+   1 Erro no Driver MySQL: O nome da classe que carrega o driver do MySQL está incorreto. O correto é com.mysql.cj.jdbc.Driver, mas o código usa com.mysql.Driver.Manager, que é inválido.
 
-## Objetivo
+   2 Injeção de SQL (SQL Injection): A consulta SQL está vulnerável a ataques de injeção de SQL. Isso ocorre porque o login e a senha do usuário são inseridos diretamente na consulta SQL sem nenhum tipo de sanitização. Isso pode permitir que um atacante insira código SQL malicioso. A solução seria usar consultas parametrizadas para evitar essa vulnerabilidade.
 
-O principal objetivo desse projeto é:
+   3 Não há tratamento de exceção adequado: O código captura as exceções, mas não faz nada com elas. Idealmente, a exceção deveria ser registrada ou tratada de forma a fornecer informações úteis para depuração.
 
-- Estabelecer uma conexão segura com o banco de dados MySQL.
-- Verificar as credenciais de login do usuário para garantir a autenticidade e segurança.
-- Realizar a documentação e testes do código, além de melhorias na segurança e robustez.
+   4 Hardcoding de credenciais: As credenciais do banco de dados (usuário e senha) estão hardcoded no código. Isso não é uma boa prática de segurança, pois expõe informações sensíveis diretamente no código-fonte.
 
-## Estrutura do Projeto
-
-### Classe `User`
-A classe **`User`** contém a lógica de autenticação de usuários e a conexão com o banco de dados. Os principais métodos são:
-
-- **`conectarBD()`**: Estabelece a conexão com o banco de dados MySQL.
-- **`verificarUsuario(String login, String senha)`**: Verifica as credenciais fornecidas pelo usuário.
-
-### Funcionalidades
-
-- **Autenticação**: O método `verificarUsuario` valida se as credenciais (login e senha) fornecidas pelo usuário são válidas ao consultar o banco de dados.
-- **Conexão ao Banco de Dados**: A classe faz uso da classe `DriverManager` para conectar-se ao banco de dados MySQL.
+   5 Verificação de conexão não realizada: Não há verificação se a conexão com o banco de dados foi bem-sucedida. Isso pode levar a falhas silenciosas caso o banco de dados não esteja disponível.
